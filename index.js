@@ -14,18 +14,25 @@ const users = [];
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.post('/item-bought',(request, response) => {
+app.post('/item-bought', (request, response) => {
+    response.send();
     for (const user of users) {
       user.emit('item bought', Number(request.body.marketID), request.body.seller, Number(request.body.price));
     }
-    response.send();
 });
 
-app.post('/item-listed',(request, response) => {
+app.post('/item-listed', (request, response) => {
+    response.send();
     for (const user of users) {
       user.emit('item listed', request.body);
     }
+});
+
+app.post('/item-unboxed', (request, response) => {
     response.send();
+    for (const user of users) {
+      user.emit('item unboxed', request.body.item, request.body.rarity, request.body.unboxer);
+    }
 });
 
 io.on('connection', (socket) => {
