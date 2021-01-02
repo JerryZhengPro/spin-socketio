@@ -1,2 +1,2 @@
-# spin-web-socket
-Web socket for Spin 
+# spin-websocket
+WebSocket for Spin 
