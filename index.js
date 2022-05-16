@@ -15,24 +15,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/item-bought', (request, response) => {
-    response.send();
     for (const user of users) {
       user.emit('item bought', Number(request.body.marketID), request.body.seller, Number(request.body.price));
     }
+    response.send();
 });
 
 app.post('/item-listed', (request, response) => {
-    response.send();
     for (const user of users) {
       user.emit('item listed', request.body);
     }
+    response.send();
 });
 
 app.post('/item-unboxed', (request, response) => {
-    response.send();
     for (const user of users) {
-      user.emit('item unboxed', request.body.item, request.body.rarity, request.body.unboxer);
+      user.emit('item unboxed', request.body.itemName, request.body.rarity, request.body.unboxer);
     }
+    response.send();
 });
 
 io.on('connection', (socket) => {
@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('A user has disconnected from the server!');
-    for (i = 0; i < users.length; i++) {
+    for (let i = 0; i < users.length; i++) {
       if (users[i].id === socket.id) {
         users.splice(i, 1); 
       }
