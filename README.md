@@ -1,2 +1,2 @@
-# spin-websocket
+# spin-socketio
 Socket.IO for Spin 

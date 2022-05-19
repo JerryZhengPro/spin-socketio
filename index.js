@@ -21,7 +21,7 @@ app.post('/item-bought', (request, response) => {
     response.send();
 });
 
-app.post('/item-listed', (request, response) => {
+app.post('/item-listed', (request, response) => { 
     for (const user of users) {
       user.emit('item listed', request.body);
     }
