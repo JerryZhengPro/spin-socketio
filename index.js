@@ -9,13 +9,15 @@ const io = require('socket.io')(server, {
 });
 
 const authenticate = (req, res, next) => {
-  if (req.type !== 'POST') {
+  if (req.method !== 'POST') {
     res.status(400);
     res.send();
+    return;
   }
-  if (req.header('Authorization') !== process.env.SOCKET_KEY) {
+  else if (req.header('Authorization') !== process.env.SOCKET_KEY) {
     res.status(401);
     res.send();
+    return;
   } else {
     next();
   }
