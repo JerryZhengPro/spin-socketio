@@ -1,5 +1,5 @@
 {
-  "name": "spin-web-socket",
+  "name": "spin-socketio",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

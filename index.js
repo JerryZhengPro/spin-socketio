@@ -8,6 +8,16 @@ const io = require('socket.io')(server, {
   }
 });
 
+const authenticate = (req, res, next) => {
+  if (req.header('Authorization') !== process.env.SOCKET_KEY) {
+    res.status(401);
+    res.send();
+  } else {
+    next();
+  }
+}
+app.use(authenticate);
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
