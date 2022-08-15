@@ -1,2 +1,2 @@
 # spin-socketio
-Socket.IO for Spin 
+Socket.IO for Spin[https://github.com/JerryZhengPro/spin] 
