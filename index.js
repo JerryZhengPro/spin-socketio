@@ -8,19 +8,29 @@ const io = require('socket.io')(server, {
   }
 });
 
-const authenticate = (req, res, next) => {
-  if (req.header('Authorization') !== process.env.SOCKET_KEY) {
-    res.status(401);
-    res.send();
-    return;
-  } else {
-    next();
-  }
-}
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+const { timingSafeEqual } = require('crypto');
+
+const compareSecrets = (a, b) => {
+  try {
+    return timingSafeEqual(Buffer.from(a, 'utf8'), Buffer.from(b, 'utf8'));
+  } catch {
+    return false;
+  }
+};
+
+const authenticate = (req, res, next) => {
+  if (compareSecrets(req.header('Authorization'), process.env.SOCKET_KEY)) {
+    next();
+  } else {
+    res.status(401);
+    res.send();
+    return;
+  }
+};
 
 const users = new Map();
 
