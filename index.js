@@ -38,6 +38,14 @@ app.get('/', (_, response) => {
   response.send('Server is online!');
 });
 
+app.post('/wake', (request, response) => {
+  if (!request.body || !request.body.identifier) {
+    response.send('ERROR_BAD_PARAMS');
+  } else {
+    response.send(request.body.identifier.toString());
+  }
+});
+
 app.post('/item-bought', authenticate, (request, response) => {
   io.emit('item bought', Number(request.body.marketID), request.body.seller, Number(request.body.price));
   response.send();
